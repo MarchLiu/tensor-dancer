@@ -1,0 +1,4 @@
+comment = 'extra methods for pg vector'
+default_version = '0.1.0'
+module_pathname = '$libdir/vector_extra'
+relocatable = true

@@ -3,7 +3,7 @@
 //
 #include <iostream>
 #include <vector>
-#include "dancer_core.h"
+#include "src/dancer_core.h"
 #include <random>
 #include <cassert>
 

@@ -4,7 +4,7 @@
 
 #include <cassert>
 #include <iostream>
-#include "dancer_core.h"
+#include "src/dancer_core.h"
 #include "cblas.h"
 
 int main(int argc, char **argv) {
@@ -34,10 +34,11 @@ int main(int argc, char **argv) {
 
         auto *result = (float *) malloc(256 * sizeof(float));
 
-        cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
-                    (int) matrix.rows, 1, (int) matrix.columns,
-                    1.0, (float *) matrix.data, (int) matrix.columns, (float *) vector.data, 1,
-                    0.0, result, 1);
+//        cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
+//                    (int) matrix.rows, 1, (int) matrix.columns,
+//                    1.0, (float *) matrix.data, (int) matrix.columns, (float *) vector.data, 1,
+//                    0.0, result, 1);
+        mul_matrix_vector_f32(matrix, (float *)vector.data, result);
 
         for (size_t i = 0; i < expect.columns; i++) {
             printf("element %zu is %f expect %f \n",

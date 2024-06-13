@@ -1,0 +1,43 @@
+"""
+将指定的文件写入到数据库中的bytea字段
+"""
+import json
+import sys
+import psycopg2
+from psycopg2 import sql
+
+# 数据库连接参数
+db_params = {
+    'dbname': 'pgv',
+    'host': 'localhost',
+}
+
+mfile = sys.argv[1]
+with open(mfile, 'rb') as f:
+    blob = f.read()
+
+# SQL查询，使用参数化查询来防止SQL注入
+query = sql.SQL("INSERT INTO matrix (content, meta) VALUES (%s, %s)")
+
+# 连接到数据库
+conn = psycopg2.connect(**db_params)
+cur = conn.cursor()
+
+try:
+    meta = {
+        "category": "expect"
+    }
+    # 执行SQL语句
+    cur.execute(query, (blob, json.dumps(meta)))
+
+    # 提交事务
+    conn.commit()
+    print("数据写入成功。")
+except Exception as e:
+    # 发生错误时回滚事务
+    conn.rollback()
+    print("数据写入失败：", e)
+finally:
+    # 关闭游标和连接
+    cur.close()
+    conn.close()

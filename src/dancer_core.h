@@ -11,6 +11,7 @@
 #include "ggml.h"
 
 #ifdef USE_PG
+#include "postgres.h"
 #define dalloc(size) palloc(size);
 #define dfree(data) pfree(data);
 #else
@@ -43,6 +44,8 @@ struct Matrix {
 int load_matrix(const char *filename, Matrix &matrix);
 
 int fill_matrix(std::istream &input, Matrix &matrix);
+
+int mul_matrix_vector_f32(Matrix &matrix, float * vector, float * result);
 
 #ifdef __cplusplus
 };

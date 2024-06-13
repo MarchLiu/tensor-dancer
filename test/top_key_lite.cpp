@@ -4,8 +4,8 @@
 #include <cassert>
 #include <random>
 #include <iostream>
-#include "insight.h"
-#include "dancer_lite.h"
+#include "src/insight.h"
+#include "src/dancer_lite.h"
 
 int main(int argc, char **argv) {
     const size_t len = 32;

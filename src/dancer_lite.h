@@ -2,7 +2,7 @@
 // Created by 刘鑫 on 2024/6/10.
 //
 
-#ifndef TENSOR_DANCER_DANCER_LITE_H
+#ifndef TENSOR_DANCER_MATRIX_LITE_H
 #define TENSOR_DANCER_DANCER_LITE_H
 
 #include <cstdio>
@@ -66,4 +66,4 @@ void top_k_indexes_float(const float *input, size_t len, size_t *indexes, size_t
 };
 #endif
 
-#endif //TENSOR_DANCER_DANCER_LITE_H
+#endif //TENSOR_DANCER_MATRIX_LITE_H

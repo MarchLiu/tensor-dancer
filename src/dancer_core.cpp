@@ -3,6 +3,7 @@
 //
 
 #include <fstream>
+#include "cblas.h"
 #include "dancer_core.h"
 
 #ifdef __cplusplus
@@ -39,6 +40,14 @@ int load_matrix(const char *filename, Matrix &matrix) {
     auto status = fill_matrix(fin, matrix);
     fin.close();
     return status;
+}
+
+int mul_matrix_vector_f32(Matrix &matrix, float * vector, float * result) {
+    cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
+                (int) matrix.rows, 1, (int) matrix.columns,
+                1.0, (float *) matrix.data, (int) matrix.columns, (float *) vector, 1,
+                0.0, result, 1);
+    return 0;
 }
 
 #ifdef __cplusplus
