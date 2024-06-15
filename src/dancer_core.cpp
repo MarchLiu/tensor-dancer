@@ -5,12 +5,10 @@
 #include <fstream>
 #include "cblas.h"
 #include "dancer_core.h"
+#include "dancer.h"
+#include <sstream>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-int fill_matrix(std::istream &input, Matrix &matrix) {
+int fill_matrix(struct Matrix &matrix, std::istream &input) {
 
     input.read(reinterpret_cast<char *>(&matrix.magic), sizeof(unsigned int));
     input.read(reinterpret_cast<char *>(&matrix.type), sizeof(ggml_type));
@@ -29,40 +27,4 @@ int fill_matrix(std::istream &input, Matrix &matrix) {
     matrix.data = body;
 
     return 0;
-}
-
-int load_matrix(const char *filename, Matrix &matrix) {
-    auto fin = std::ifstream(filename, std::ios::binary);
-    if (!fin) {
-        fprintf(stderr, "%s: failed to open '%s'\n", __func__, filename);
-        return -1;
-    }
-    auto status = fill_matrix(fin, matrix);
-    fin.close();
-    return status;
-}
-
-int mul_matrix_vector_f32(Matrix &matrix, float * vector, float * result) {
-    cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
-                (int) matrix.rows, 1, (int) matrix.columns,
-                1.0, (float *) matrix.data, (int) matrix.columns, (float *) vector, 1,
-                0.0, result, 1);
-    return 0;
-}
-
-#ifdef __cplusplus
-};
-#endif
-
-Matrix::Matrix() {
-    this->type = GGML_TYPE_F32;
-    this->rows = 0;
-    this->columns = 0;
-    this->data = nullptr;
-}
-
-Matrix::~Matrix() {
-    if (this->data != nullptr) {
-        dfree(data);
-    }
 }

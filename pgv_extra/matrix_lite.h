@@ -26,6 +26,8 @@ struct Matrix {
     void *data;
 };
 
+#define READ_SIZE_T(pos, buffer) *((size_t *) pos); \
+    pos += sizeof(size_t);
 
 int mul_matrix_vector_f32(struct Matrix *matrix, float *vector, float *result);
 

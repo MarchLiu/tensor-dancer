@@ -19,38 +19,6 @@
 #define dfree(data) free(data);
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-struct MatrixHeader {
-    ggml_type type;
-    size_t rows;
-    size_t columns;
-};
-
-struct Matrix {
-    Matrix();
-
-    virtual ~Matrix();
-
-    unsigned int magic;
-    ggml_type type;
-    size_t rows;
-    size_t columns;
-    void *data;
-};
-
-int load_matrix(const char *filename, Matrix &matrix);
-
-int fill_matrix(std::istream &input, Matrix &matrix);
-
-int mul_matrix_vector_f32(Matrix &matrix, float * vector, float * result);
-
-#ifdef __cplusplus
-};
-#endif
-
 template<typename T>
 struct Indexed {
     int index;
@@ -99,5 +67,7 @@ std::vector<Indexed<T>> top_k_indexed(std::vector<T> data, size_t k) {
     std::reverse(result.begin(), result.end());
     return result;
 }
+
+int fill_matrix(struct Matrix &matrix, std::istream &input);
 
 #endif //TENSOR_DANCER_DANCER_CORE_H

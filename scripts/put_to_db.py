@@ -6,7 +6,6 @@ import sys
 import psycopg2
 from psycopg2 import sql
 
-# 数据库连接参数
 db_params = {
     'dbname': 'pgv',
     'host': 'localhost',
@@ -16,10 +15,8 @@ mfile = sys.argv[1]
 with open(mfile, 'rb') as f:
     blob = f.read()
 
-# SQL查询，使用参数化查询来防止SQL注入
 query = sql.SQL("INSERT INTO matrix (content, meta) VALUES (%s, %s)")
 
-# 连接到数据库
 conn = psycopg2.connect(**db_params)
 cur = conn.cursor()
 
