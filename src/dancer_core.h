@@ -10,15 +10,6 @@
 #include <queue>
 #include "ggml.h"
 
-#ifdef USE_PG
-#include "postgres.h"
-#define dalloc(size) palloc(size);
-#define dfree(data) pfree(data);
-#else
-#define dalloc(size) malloc(size);
-#define dfree(data) free(data);
-#endif
-
 template<typename T>
 struct Indexed {
     int index;

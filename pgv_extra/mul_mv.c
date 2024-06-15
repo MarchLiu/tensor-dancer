@@ -4,8 +4,8 @@
 
 #include <assert.h>
 #include <stdlib.h>
-#include "matrix_lite.h"
 #include "cblas.h"
+#include "src/dancer.h"
 
 void *readall(char *filename) {
     FILE *file;
@@ -51,12 +51,12 @@ void print_matrix(struct Matrix *matrix, char *title) {
     printf("\t row: %zu\n", matrix->rows);
     printf("\t columns: %zu\n", matrix->columns);
 
-    float *pos = (float *) matrix->data;
-    for (size_t i = 0; i < matrix->rows; i++) {
-        for (size_t j = 0; j < matrix->columns; j++) {
-            printf("%s[%zu, %zu] = %f\n", title, i, j, pos[i * matrix->columns + j]);
-        }
-    }
+//    float *pos = (float *) matrix->data;
+//    for (size_t i = 0; i < matrix->rows; i++) {
+//        for (size_t j = 0; j < matrix->columns; j++) {
+//            printf("%s[%zu, %zu] = %f\n", title, i, j, pos[i * matrix->columns + j]);
+//        }
+//    }
 }
 
 int main(int argc, char **argv) {
@@ -64,21 +64,21 @@ int main(int argc, char **argv) {
     char *matrix_filename = argv[1];
     char *vector_filename = argv[2];
     void *m_content = readall(matrix_filename);
-    struct Matrix *matrix = malloc(sizeof(struct Matrix));
-    load_matrix(matrix, m_content);
-    // print_matrix(matrix, "matrix");
+    struct Matrix *matrix = InitMatrixF32();
+    write_matrix(matrix, m_content, 4194328);
+    // load_matrix(matrix, matrix_filename);
+    print_matrix(matrix, "matrix");
 
-    void *v_content = readall(vector_filename);
-    struct Matrix *vector = malloc(sizeof(struct Matrix));
+    struct Matrix *vector = dalloc(sizeof(struct Matrix));
     vector->rows = 1;
     vector->columns = matrix->columns;
-    load_matrix(vector, v_content);
+    load_matrix(vector, vector_filename);
     // print_matrix(vector, "vector");
 
-    struct Matrix *result = malloc(sizeof(struct Matrix));
+    struct Matrix *result = dalloc(sizeof(struct Matrix));
     result->rows = 1;
     result->columns = matrix->rows;
-    result->data = malloc(matrix->rows * sizeof(float));
+    result->data = dalloc(matrix->rows * sizeof(float));
 
     mul_matrix_vector_f32(matrix, vector->data, result->data);
 

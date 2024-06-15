@@ -11,6 +11,15 @@
 extern "C" {
 #endif
 
+#ifdef USE_PG
+#include "postgres.h"
+#define dalloc(size) palloc(size);
+#define dfree(data) pfree(data);
+#else
+#define dalloc(size) malloc(size);
+#define dfree(data) free(data);
+#endif
+
 extern struct Matrix {
     unsigned int magic;
     enum ggml_type type;
@@ -25,7 +34,11 @@ int write_matrix(struct Matrix *matrix, void * buffer, size_t size);
 
 int mul_matrix_vector_f32(struct Matrix *matrix, float * vector, float * result);
 
-struct Matrix* InitMatrixF32();
+struct Matrix* InitMatrixF32(void);
+
+struct Matrix *InitMatrix(enum ggml_type type);
+
+struct Matrix *CreateMatrix(enum ggml_type type, size_t rows, size_t columns);
 
 void FreeMatrix(struct Matrix* matrix);
 

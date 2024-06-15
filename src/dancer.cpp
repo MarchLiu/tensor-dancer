@@ -11,8 +11,23 @@
 extern "C" {
 #endif
 
+
+class mem_streambuf : public std::streambuf {
+public:
+    mem_streambuf(char* begin, char* end) {
+        // 设置gptr()为当前读取位置，egptr()为读取结束位置
+        setg(begin, begin, end);
+    }
+};
+
 int write_matrix(struct Matrix *matrix, void *buffer, size_t size) {
-    std::istringstream input((char *) buffer, size);
+    char* buffer_begin = static_cast<char*>(buffer);
+    char* buffer_end = buffer_begin + size;
+
+    // 使用mem_streambuf创建istream
+    mem_streambuf sb(buffer_begin, buffer_end);
+    std::istream input(&sb);
+
     return fill_matrix(*matrix, input);
 }
 
@@ -35,8 +50,8 @@ int mul_matrix_vector_f32(struct Matrix *matrix, float *vector, float *result) {
     return 0;
 }
 
-struct Matrix *InitMatrixF32() {
-    struct Matrix *result = (struct Matrix *) malloc(sizeof(struct Matrix));
+struct Matrix *InitMatrixF32(void) {
+    auto *result = (struct Matrix *) dalloc(sizeof(struct Matrix));
     result->magic = 0;
     result->type = GGML_TYPE_F32;
     result->rows = 0;
@@ -45,8 +60,31 @@ struct Matrix *InitMatrixF32() {
     return result;
 }
 
-void FreeMatrix(struct Matrix* matrix) {
-    if(matrix->data != nullptr){
+struct Matrix *InitMatrix(enum ggml_type type) {
+    auto *result = (struct Matrix *) dalloc(sizeof(struct Matrix));
+    result->magic = 0;
+    result->type = type;
+    result->rows = 0;
+    result->columns = 0;
+    result->data = nullptr;
+    return result;
+}
+
+struct Matrix *CreateMatrix(enum ggml_type type, size_t rows, size_t columns) {
+    size_t buffer_size = (rows * columns) * ggml_type_size(type);
+    auto *result = (struct Matrix *) dalloc(sizeof(struct Matrix));
+    result->magic = 0;
+    result->type = type;
+    result->rows = 0;
+    result->columns = 0;
+    result->data = dalloc(buffer_size);
+    memset(result->data, 0, buffer_size);
+    return result;
+}
+
+
+void FreeMatrix(struct Matrix *matrix) {
+    if (matrix->data != nullptr) {
         dfree(matrix->data);
         matrix->data = nullptr;
     }

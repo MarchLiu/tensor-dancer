@@ -1,10 +1,9 @@
-vector_extra = shared_module('vector_extra', 'matrix_lite.c', 'pgv_extra.c',
-                             dependencies : [blas_dep, lapack_dep, pg_dep, ggml_dep, gettext_dep],
-                             # cpp_args : lib_args + ['-DUSE_PG', '-I' + pgv_src_dir, '-I' + project_root_dir],
+vector_extra = shared_module('vector_extra',  'pgv_extra.c',
+                             dependencies : [blas_dep, lapack_dep, pg_dep, ggml_dep, gettext_dep, core_dep],
                              c_args : lib_args + ['-DUSE_PG', '-I' + project_root_dir])
 
-load_matrix_lite = executable('mul-mv-lite', 'matrix_lite.c', 'mul_mv.c',
-                              dependencies : [blas_dep, lapack_dep, ggml_dep, gettext_dep],
+load_matrix_lite = executable('mul-mv-lite', 'mul_mv.c',
+                              dependencies : [blas_dep, lapack_dep, ggml_dep, gettext_dep, core_dep],
                               c_args : lib_args + ['-I' + project_root_dir])
 
 install_data('vector_extra.control',
