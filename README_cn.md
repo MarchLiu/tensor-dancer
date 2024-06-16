@@ -1,6 +1,6 @@
 # Tensor Dancer
 
-Tensor Dancer（张量舞者）是一个高性能计算库，它以 BLAS/LAPACK 和 GGML 为核心，围绕 GGML 
+Tensor Dancer（张量舞者）是一个高性能计算库，它以 BLAS/LAPACK 和 GGML 为核心，围绕 GGML
 的计算图构造一组高性能计算功能，重点关注为 PostgreSQL 等软件环境引入高阶代数结构的高性能计算
 支持。
 
@@ -18,5 +18,20 @@ vector 数据集直接进行 pca 分析等功能。
 ## 技术栈
 
 Tensor Dancer 以 BLAS 、 LAPACK 和 GGML 为算法内核，在用于支持 [PG Vector](https://github.com/pgvector/pgvector) 的函数中，使用
-了 [PG Vector](https://github.com/pgvector/pgvector)
+了 [PG Vector](https://github.com/pgvector/pgvector) 。
+
+项目主要使用 C 和 CPP，使用 meson 构建工具，有少量使用 python 编写的工具代码。使用 meson 是因为 PostgreSQL 使用 meson
+构建，基于同样的理由，未来可能会有一部分使用 perl 的测试脚本。
+
+## 关于我
+
+我叫刘鑫，英文名 Mars Liu，以前我也用过 March Liu ，并以这个署名翻译了 Python 2.2/2.3/2.4/2.5/2.7 版的《Python
+Tutorial》。
+
+前几年，我出版了《微型 Lisp
+解释器的构造与实现》，这本书基于我的组合子库 [Jaskell Core](https://github.com/MarchLiu/jaskell-core) ，介绍了
+一些解释器开发的知识。
+
+我是 Python 中文社区和 PostgreSQL 中文社区最早的用户，在 QCon 活动中，我演示过用 SQL CTE 语法实现的神经网络算法：
+[SQL CTE](https://github.com/MarchLiu/qcon2019shanghai/tree/master/sql-cte)
 

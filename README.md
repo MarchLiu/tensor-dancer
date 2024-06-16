@@ -20,3 +20,15 @@ into PostgreSQL, and then define various algorithmic pg function interfaces.
 Tensor Dancer uses BLAS, LAPACK, and GGML as the algorithmic core. In the functions supporting PG Vector, it utilizes PG
 Vector.
 
+## About Me
+
+My name is Liu Xin, and my English name is Mars Liu (previously used March Liu). I translated the Python
+2.2/2.3/2.4/2.5/2.7 Tutorial under this pseudonym.
+
+In recent years, I published a book titled "Construction and Implementation of Micro Lisp Interpreter", which is based
+on my Jaskell Core library ([https://github.com/MarchLiu/jaskell-core](https://github.com/MarchLiu/jaskell-core)). The
+book introduces some knowledge about interpreter development.
+
+I am one of the earliest users in both the Python Chinese Community and PostgreSQL Chinese Community. At QCon, I
+demonstrated a neural network algorithm implemented using SQL CTE
+syntax: [SQL CTE](https://github.com/MarchLiu/qcon2019shanghai/tree/master/sql-cte).
