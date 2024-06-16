@@ -5,6 +5,8 @@
 #ifndef TENSOR_DANCER_TENSOR_DANCER_H
 #define TENSOR_DANCER_TENSOR_DANCER_H
 
+#include "src/dancer.h"
+
 #ifdef __cplusplus
 exten "C" {
 #endif

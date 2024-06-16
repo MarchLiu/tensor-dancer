@@ -31,24 +31,13 @@ PG_MODULE_MAGIC;
 
 PGDLLEXPORT PG_FUNCTION_INFO_V1(matrix_rows);
 
-Datum
-matrix_rows(PG_FUNCTION_ARGS) {
-    bytea *a = PG_GETARG_BYTEA_P(0);
-    bytea *b = PG_GETARG_BYTEA_P(1);
-
-    char *data = a->vl_dat;
-    struct Matrix* matrix = palloc(sizeof(struct Matrix));
-    // todo assert status
-    int32 result;
-    memcpy(&result, a->vl_len_, 4);
-    void * buffer = a->vl_dat;
-    int32 status = write_matrix(matrix, buffer, result);
-    CHECK_MATRIX_FILL(status);
-
-    // pfree(matrix->data);
-    pfree(matrix);
-    PG_RETURN_INT32(result);
-}
+//Datum
+//matrix_rows(PG_FUNCTION_ARGS) {
+//    bytea *a = PG_GETARG_BYTEA_P(0);
+//
+//
+//    PG_RETURN_INT32(result);
+//}
 
 
 #ifdef __cplusplus

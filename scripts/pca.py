@@ -37,7 +37,8 @@ def save_matrix(matrix: list[list[float]], filename: str):
     :param filename: save to
     :return:
     """
-    MAGIC_CODE = 0
+    # 0x540x440x4D0x58 => TDMX = Tensor Dancer Matrix
+    MAGIC_CODE = 1481458772
     ggml_type = 0  # GGML_TYPE_F32
     print(f"save matrix[{len(matrix), len(matrix[0])}] into {filename}")
     with open(filename, "wb") as f:

@@ -64,6 +64,9 @@ test_ctopk = executable('top-k-lite', 'src/dancer_lite.cpp', 'src/insight.cpp', 
 test_load_matrix = executable('load-matrix', 'src/insight.cpp', 'test/load_matrix.cpp',
                               dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
 
+test_magic_code = executable('magic-code', 'test/matrix_magic.cpp',
+                             dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
+
 
 shared_library('pg_ggml', 'src/pg_ggml.cpp',
                cpp_args : lib_args,

@@ -15,7 +15,6 @@ extern "C" {
 class mem_streambuf : public std::streambuf {
 public:
     mem_streambuf(char* begin, char* end) {
-        // 设置gptr()为当前读取位置，egptr()为读取结束位置
         setg(begin, begin, end);
     }
 };
@@ -24,7 +23,6 @@ int write_matrix(struct Matrix *matrix, void *buffer, size_t size) {
     char* buffer_begin = static_cast<char*>(buffer);
     char* buffer_end = buffer_begin + size;
 
-    // 使用mem_streambuf创建istream
     mem_streambuf sb(buffer_begin, buffer_end);
     std::istream input(&sb);
 

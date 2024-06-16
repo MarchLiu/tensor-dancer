@@ -20,6 +20,9 @@ extern "C" {
 #define dfree(data) free(data);
 #endif
 
+// 0x540x440x4D0x58 => TDMX = Tensor Dancer Matrix
+const unsigned int MATRIX_MAGIC = 1481458772;
+
 extern struct Matrix {
     unsigned int magic;
     enum ggml_type type;
