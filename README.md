@@ -22,7 +22,7 @@ Vector.
 
 ## About Me
 
-My name is Liu Xin, and my English name is Mars Liu (previously used March Liu). I translated the Python
+My name is Liu Xin, and my English name is Mars Liu and previously used March Liu. I translated the Python
 2.2/2.3/2.4/2.5/2.7 Tutorial under this pseudonym.
 
 In recent years, I published a book titled "Construction and Implementation of Micro Lisp Interpreter", which is based
