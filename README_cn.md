@@ -20,15 +20,3 @@ vector 数据集直接进行 pca 分析等功能。
 Tensor Dancer 以 BLAS 、 LAPACK 和 GGML 为算法内核，在用于支持 [PG Vector](https://github.com/pgvector/pgvector) 的函数中，使用
 了 [PG Vector](https://github.com/pgvector/pgvector)
 
-## 向 Tensor Dancer 项目捐赠
-
-<div>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_donations">
-<input type="hidden" name="business" value="march.liu@gmail.com">
-<input type="hidden" name="item_name" value="Donate to this project">
-<input type="hidden" name="currency_code" value="USD">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-</div>
