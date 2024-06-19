@@ -1,8 +1,6 @@
 //
 // Created by 刘鑫 on 2024/6/16.
 //
-#include <cstdlib>
-#include <string>
 #include <iostream>
 #include "dancer.h"
 
@@ -24,7 +22,4 @@ int main(int argc, char** argv) {
         printf("magic code mode %d is 0x%X\n", i, c);
         magic_code = magic_code >> 8;
     }
-
-
-
 }

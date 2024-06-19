@@ -42,7 +42,7 @@ pg_dep = declare_dependency(link_with : pg_libs,
 #pgv_dep = declare_dependency(link_with : [library('vector')],
 #                             include_directories : [pg_inc / 'postgresql' / 'server' / 'extension' / 'vector'])
 
-dancer_core = static_library('dancer_core', 'src/dancer_core.cpp', 'src/dancer.cpp',
+dancer_core = static_library('dancer_core', 'src/dancer_core.cpp', 'src/dancer.cpp', 'src/ggml_dancer.cpp',
                              dependencies : [ggml_dep, blas_dep, lapack_dep],
                              cpp_args : lib_args,
                              link_args : ['-lstdc++'],
@@ -64,16 +64,22 @@ test_ctopk = executable('top-k-lite', 'src/dancer_lite.cpp', 'src/insight.cpp', 
 test_load_matrix = executable('load-matrix', 'src/insight.cpp', 'test/load_matrix.cpp',
                               dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
 
+test_matrix_product = executable('matrix-product', 'src/insight.cpp', 'test/matrix_product.c',
+                                 dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
+
 test_magic_code = executable('magic-code', 'test/matrix_magic.cpp',
                              dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
 
+test_ggml_sdvr = executable('ggml-sdvr', 'test/tensor_sdvr.cpp', 'src/insight.cpp',
+                            dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
+
+test_ggml_convariance = executable('tensor-convariance', 'test/tensor_covariance.cpp', 'src/insight.cpp',
+                                   dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
 
 shared_library('pg_ggml', 'src/pg_ggml.cpp',
                cpp_args : lib_args,
                dependencies : [pg_dep, ggml_dep, blas_dep, lapack_dep, core_dep],
                install : true)
-
-
 
 all_build = []
 
