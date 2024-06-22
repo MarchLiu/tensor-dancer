@@ -62,8 +62,8 @@ void fill_rand_f32(ggml_tensor *tensor, float range) {
     auto dice = std::bind(distribution, generator);
     for (int i = 0; i < tensor->ne[0]; i++) {
         for (int j = 0; j < tensor->ne[1]; j++) {
-            for (int k = 0; k < tensor->ne[0]; k++) {
-                for (int l = 0; l < tensor->ne[0]; l++) {
+            for (int k = 0; k < tensor->ne[2]; k++) {
+                for (int l = 0; l < tensor->ne[3]; l++) {
                     ggml_set_f32_nd(tensor, i, j, k, l, dice());
                 }
             }
@@ -72,7 +72,7 @@ void fill_rand_f32(ggml_tensor *tensor, float range) {
 }
 
 void insight_matrix_tensor_f32(ggml_tensor *tensor, const char *title) {
-    printf("%s: [\n", title);
+    printf("%s(%lld, %lld):\n[\n", title, tensor->ne[0], tensor->ne[1]);
     for (int r = 0; r < tensor->ne[0]; r++) {
         std::cout << "\t[";
         for (int c = 0; c < tensor->ne[1]; c++) {

@@ -31,19 +31,38 @@ extern struct Matrix {
     void *data;
 } Matrix;
 
+extern struct MatrixHeader {
+    unsigned int magic;
+    enum ggml_type type;
+    size_t rows;
+    size_t columns;
+} MatrixHeader;
+
 int load_matrix(struct Matrix *matrix, const char *filename);
 
-int write_matrix(struct Matrix *matrix, void * buffer, size_t size);
+int write_matrix(struct Matrix *matrix, void *buffer, size_t size);
 
-int mul_matrix_vector_f32(struct Matrix *matrix, float * vector, float * result);
+int mul_matrix_vector_f32(struct Matrix *matrix, float *vector, float *result);
 
-struct Matrix* InitMatrixF32(void);
+struct Matrix *InitMatrixF32(void);
 
 struct Matrix *InitMatrix(enum ggml_type type);
 
 struct Matrix *CreateMatrix(enum ggml_type type, size_t rows, size_t columns);
 
-void FreeMatrix(struct Matrix* matrix);
+void FreeMatrix(struct Matrix *matrix);
+
+struct ggml_tensor *load_matrix_as_tensor(struct ggml_context *ctx, const char *filename);
+
+struct MatrixHeader load_matrix_file_header(FILE *file);
+
+size_t save_matrix(const struct Matrix *matrix, const char *filename);
+
+size_t save_tensor_as_matrix(const struct ggml_tensor *tensor, const char *filename);
+
+size_t write_matrix_header(const struct MatrixHeader *matrix, FILE* file);
+
+struct MatrixHeader* matrix_header(const struct Matrix* matrix);
 
 #ifdef __cplusplus
 };

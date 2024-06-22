@@ -33,8 +33,11 @@ ggml_tensor *dancer_unbiased_variance(ggml_context *ctx, ggml_tensor *tensor_X);
 ggml_tensor *dancer_psdv(ggml_context *ctx, ggml_tensor *tensor_X);
 // unbiased standard deviation
 ggml_tensor *dancer_usdv(ggml_context *ctx, ggml_tensor *tensor_X);
-
+// covariance
 ggml_tensor* dancer_covariance(ggml_context *ctx, ggml_tensor * tensor_X);
+
+// pca
+ggml_tensor* dancer_pca_force(ggml_context *ctx, ggml_tensor * tensor_X, size_t k, int n_threads);
 
 #ifdef __cplusplus
 };

@@ -16,8 +16,9 @@ gettext_dep = declare_dependency(
     include_directories : ['/opt/homebrew/Cellar/gettext/0.22.5/include'])
 
 pg_inc = run_command(['pg_config', '--includedir']).stdout().strip()
-pg_includes = [pg_inc, pg_inc / 'postgresql' / 'server', pg_inc / 'postgresql' / 'server' / 'utils']
-pg_lib_dir = run_command(['pg_config', '--libdir']).stdout().strip()
+pg_pkg_inc = run_command(['pg_config', '--pkgincludedir']).stdout().strip()
+pg_includes = [pg_inc, pg_pkg_inc, pg_pkg_inc / 'server', pg_pkg_inc / 'server' / 'utils']
+pg_lib_dir = run_command(['pg_config', '--pkglibdir']).stdout().strip()
 pg_libs_list = run_command(['pg_config', '--libs']).stdout().strip().split()
 pg_cflags = run_command(['pg_config', '--cflags']).stdout().strip()
 pg_libs = [] # [library('pgcommon')]
@@ -29,6 +30,8 @@ pg_libs = [] # [library('pgcommon')]
 #        pg_libs += [dependency(libname)]
 #    endif
 #endforeach
+
+libpq_dep = dependency('libpq')
 
 dir_data = get_option('datadir')
 dir_data_extension = dir_data / 'extension'
@@ -44,8 +47,9 @@ pg_dep = declare_dependency(link_with : pg_libs,
 
 dancer_core = static_library('dancer_core', 'src/dancer_core.cpp', 'src/dancer.cpp', 'src/ggml_dancer.cpp',
                              dependencies : [ggml_dep, blas_dep, lapack_dep],
-                             cpp_args : lib_args,
                              link_args : ['-lstdc++'],
+                             cpp_args : lib_args, # + ['-DDEBUG'],
+                             c_args : lib_args, # + ['-DDEBUG'],
                              install : true)
 
 core_dep = declare_dependency(
@@ -64,6 +68,9 @@ test_ctopk = executable('top-k-lite', 'src/dancer_lite.cpp', 'src/insight.cpp', 
 test_load_matrix = executable('load-matrix', 'src/insight.cpp', 'test/load_matrix.cpp',
                               dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
 
+test_assert_matrix = executable('assert-matrix', 'src/insight.cpp', 'test/assert_matrix.cpp',
+                                dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
+
 test_matrix_product = executable('matrix-product', 'src/insight.cpp', 'test/matrix_product.c',
                                  dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
 
@@ -75,6 +82,19 @@ test_ggml_sdvr = executable('ggml-sdvr', 'test/tensor_sdvr.cpp', 'src/insight.cp
 
 test_ggml_convariance = executable('tensor-convariance', 'test/tensor_covariance.cpp', 'src/insight.cpp',
                                    dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
+
+test_ggml_mean = executable('ggml-mean', 'test/ggml_mean.cpp', 'src/insight.cpp',
+                            dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
+
+test_matrix_header = executable('matrix-header', 'test/matrix_header.cpp', 'src/insight.cpp',
+                                dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
+
+test_dump_samples = executable('dump-samples', 'test/dump_samples.cpp', 'src/insight.cpp',
+                               dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep, pg_dep, libpq_dep])
+
+test_ggml_pca = executable('ggml-pca', 'test/ggml_pca.cpp', 'src/insight.cpp',
+                           dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
+
 
 shared_library('pg_ggml', 'src/pg_ggml.cpp',
                cpp_args : lib_args,
