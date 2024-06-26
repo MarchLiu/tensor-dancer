@@ -6,6 +6,8 @@
 #include "src/dancer.h"
 #include "postgres.h"
 #include "fmgr.h"
+#include "copilota.h"
+#include <builtins.h>
 
 #ifdef __cplusplus
 exten "C" {
@@ -29,15 +31,19 @@ static inline void CHECK_RESULT(int status) {
 
 PG_MODULE_MAGIC;
 
-PGDLLEXPORT PG_FUNCTION_INFO_V1(matrix_rows);
+PGDLLEXPORT PG_FUNCTION_INFO_V1(copilota);
 
-//Datum
-//matrix_rows(PG_FUNCTION_ARGS) {
-//    bytea *a = PG_GETARG_BYTEA_P(0);
-//
-//
-//    PG_RETURN_INT32(result);
-//}
+Datum
+copilota(PG_FUNCTION_ARGS) {
+    text *ask = PG_GETARG_TEXT_P(0);
+
+    char *question = text_to_cstring(ask);
+
+    const char *answer = agent(question);
+
+    text* result = cstring_to_text(answer);
+    PG_RETURN_TEXT_P(result);
+}
 
 
 #ifdef __cplusplus

@@ -33,7 +33,6 @@ InitVector(int dim) {
 PG_MODULE_MAGIC;
 
 PGDLLEXPORT PG_FUNCTION_INFO_V1(pgv_mulmv);
-
 Datum
 pgv_mulmv(PG_FUNCTION_ARGS) {
     bytea *a = PG_GETARG_BYTEA_P(0);

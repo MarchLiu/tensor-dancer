@@ -39,6 +39,9 @@ extension_data_args = {
     'install_dir' : dir_data_extension,
 }
 
+json_dep = dependency('nlohmann_json')
+http_dep = dependency('cpp-httplib')
+
 pg_dep = declare_dependency(link_with : pg_libs,
                             include_directories : pg_includes)
 
@@ -94,6 +97,12 @@ test_dump_samples = executable('dump-samples', 'test/dump_samples.cpp', 'src/ins
 
 test_ggml_pca = executable('ggml-pca', 'test/ggml_pca.cpp', 'src/insight.cpp',
                            dependencies : [ggml_dep, blas_dep, lapack_dep, core_dep])
+
+test_ollama_list = executable('ollama-models', 'test/ollama_models.cpp',
+                              dependencies : [json_dep, http_dep])
+
+test_ollama_chat = executable('ollama-chat', 'test/ollama_chat.cpp', 'tensor_dancer/agent.cpp',
+                              dependencies : [json_dep, http_dep])
 
 
 shared_library('pg_ggml', 'src/pg_ggml.cpp',

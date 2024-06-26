@@ -1,0 +1,4 @@
+comment = 'Tensor Dancer For PostgreSQL'
+default_version = '0.1.0'
+module_pathname = '$libdir/tensor_dancer'
+relocatable = true
