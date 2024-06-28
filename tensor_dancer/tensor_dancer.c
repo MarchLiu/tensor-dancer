@@ -8,6 +8,7 @@
 #include "fmgr.h"
 #include "copilota.h"
 #include <builtins.h>
+#include <executor/spi.h>
 
 #ifdef __cplusplus
 exten "C" {
@@ -39,7 +40,9 @@ copilota(PG_FUNCTION_ARGS) {
 
     char *question = text_to_cstring(ask);
 
+    SPI_connect();
     const char *answer = agent(question);
+    SPI_finish();
 
     text* result = cstring_to_text(answer);
     PG_RETURN_TEXT_P(result);

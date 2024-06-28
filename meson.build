@@ -30,6 +30,9 @@ pg_libs = [] # [library('pgcommon')]
 #        pg_libs += [dependency(libname)]
 #    endif
 #endforeach
+pg_dep = declare_dependency(link_with : pg_libs,
+                            d_import_dirs : pg_lib_dir,
+                            include_directories : pg_includes)
 
 libpq_dep = dependency('libpq')
 
@@ -42,8 +45,7 @@ extension_data_args = {
 json_dep = dependency('nlohmann_json')
 http_dep = dependency('cpp-httplib')
 
-pg_dep = declare_dependency(link_with : pg_libs,
-                            include_directories : pg_includes)
+
 
 #pgv_dep = declare_dependency(link_with : [library('vector')],
 #                             include_directories : [pg_inc / 'postgresql' / 'server' / 'extension' / 'vector'])
@@ -101,7 +103,7 @@ test_ggml_pca = executable('ggml-pca', 'test/ggml_pca.cpp', 'src/insight.cpp',
 test_ollama_list = executable('ollama-models', 'test/ollama_models.cpp',
                               dependencies : [json_dep, http_dep])
 
-test_ollama_chat = executable('ollama-chat', 'test/ollama_chat.cpp', 'tensor_dancer/agent.cpp',
+test_ollama_chat = executable('ollama-chat', 'test/ollama_chat.cpp',
                               dependencies : [json_dep, http_dep])
 
 

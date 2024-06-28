@@ -3,26 +3,19 @@
 //
 
 #include "agent.h"
+#include "insight.h"
+#include "sstream"
 
 static json ctx;
 
-json make_request(const string &content, json &context) {
-    string prompt = R"(
+static const string prompt = R"(
 # SQL Assistant
 
 ## Database Tables
 
 The following are the user tables and fields in this database:
 
-* items
-    * id
-    * content
-    * embedding
-    * target
-* matrix
-    * id
-    * content
-    * meta
+{{{}}}
 
 ## Objective
 
@@ -30,6 +23,19 @@ Generate SQL queries for PostgreSQL as described in the next section.
 
 ## Appeal
 )";
+static const string slot = "{{{}}}";
+
+json make_request(const string &content, json &context) {
+
+    vector<Table> tables = list_tables();
+    stringstream doc_buf;
+    for(const auto& table: tables) {
+        doc_buf << table.toDoc();
+    }
+    string p = string(prompt);
+    size_t pos = p.find(slot);
+    p.replace(pos, slot.size(), doc_buf.str());
+    p += content;
 
     json result = {
             {"stream", false},
@@ -37,7 +43,7 @@ Generate SQL queries for PostgreSQL as described in the next section.
             {"model",  "phi3:mini"}
     };
 
-    result["prompt"] = prompt + content;
+    result["prompt"] = p;
     if (!context.empty()) {
         result["context"] = context;
     }

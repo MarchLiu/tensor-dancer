@@ -89,12 +89,6 @@ int main(int argc, char **argv) {
     write_matrix_header(&header, file);
 
     for (int i = 0; i < rows; i++) {
-
-//        int len = PQgetlength(res, i, 0);
-
-//        long id_buf = 0;
-//        memcpy(&id_buf, PQgetvalue(res, i, 0), len);
-//        long id_val = ntohll(id_buf);
         char * id = PQgetvalue(res, i, 0);
 
         printf("vector id %s\n", id);

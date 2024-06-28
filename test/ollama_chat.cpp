@@ -6,28 +6,27 @@
 #include "httplib.h"
 #include <iostream>
 #include <string>
-#include "tensor_dancer/agent.h"
 using namespace std;
 using json = nlohmann::json;
 
 static json ctx;
 
-//json make_request(string& content, json& context) {
-//    auto result = json::parse(R"(
-//{
-//    "stream": false,
-//    "system": "",
-//    "model": "phi3:mini"
-//}
-//)");
-//
-//    result["prompt"] = content;
-//    if(!context.empty()){
-//        result["context"] = context;
-//    }
-//
-//    return result;
-//}
+json make_request(string& content, json& context) {
+    auto result = json::parse(R"(
+{
+    "stream": false,
+    "system": "",
+    "model": "phi3:mini"
+}
+)");
+
+    result["prompt"] = content;
+    if(!context.empty()){
+        result["context"] = context;
+    }
+
+    return result;
+}
 
 int main(int argc, char** argv) {
 
