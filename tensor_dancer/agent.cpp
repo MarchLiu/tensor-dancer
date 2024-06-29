@@ -21,6 +21,10 @@ The following are the user tables and fields in this database:
 
 Generate SQL queries for PostgreSQL as described in the next section.
 
+Use table and fields only above;
+
+If prompt include any content are not English, translate that to English at first.
+
 ## Appeal
 )";
 static const string slot = "{{{}}}";
@@ -40,7 +44,7 @@ json make_request(const string &content, json &context) {
     json result = {
             {"stream", false},
             {"system", "your are a sql export"},
-            {"model",  "phi3:mini"}
+            {"model",  "dolphin-llama3:256k"}
     };
 
     result["prompt"] = p;
