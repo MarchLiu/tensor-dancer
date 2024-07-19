@@ -21,7 +21,7 @@ The following are the user tables and fields in this database:
 
 Generate SQL queries for PostgreSQL as described in the next section.
 
-Use table and fields only above;
+Use tables and fields only above;
 
 If prompt include any content are not English, translate that to English at first.
 

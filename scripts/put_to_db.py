@@ -7,7 +7,7 @@ import psycopg2
 from psycopg2 import sql
 
 db_params = {
-    'dbname': 'pgv',
+    'dbname': 'cve',
     'host': 'localhost',
 }
 
@@ -15,14 +15,18 @@ mfile = sys.argv[1]
 with open(mfile, 'rb') as f:
     blob = f.read()
 
-query = sql.SQL("INSERT INTO matrix (content, meta) VALUES (%s, %s)")
+query = sql.SQL("INSERT INTO pca (content, meta) VALUES (%s, %s)")
 
 conn = psycopg2.connect(**db_params)
 cur = conn.cursor()
 
 try:
     meta = {
-        "category": "expect"
+        "type": "matrix",
+        "category": "pca",
+        "samples": "cve",
+        "row": 256,
+        "column": 4096,
     }
     # 执行SQL语句
     cur.execute(query, (blob, json.dumps(meta)))

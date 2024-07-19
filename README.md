@@ -32,3 +32,7 @@ book introduces some knowledge about interpreter development.
 I am one of the earliest users in both the Python Chinese Community and PostgreSQL Chinese Community. At QCon, I
 demonstrated a neural network algorithm implemented using SQL CTE
 syntax: [SQL CTE](https://github.com/MarchLiu/qcon2019shanghai/tree/master/sql-cte).
+
+## Donate
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/marsliuzero)

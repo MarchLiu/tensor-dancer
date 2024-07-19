@@ -45,11 +45,12 @@ pgv_mulmv(PG_FUNCTION_ARGS) {
     struct Matrix *matrix = InitMatrixF32();
     // todo assert status
     int status = write_matrix(matrix, data, len);
-
+#ifdef DEBUG
     char *message = palloc(256);
     ereport(INFO, (errcode(ERRCODE_DATA_EXCEPTION),
             errmsg("matrix load %d data get status %d, rows %zu, columns %zu",
                    len, status, matrix->rows, matrix->columns)));
+#endif
 
     Vector *result = InitVector((int) matrix->rows);
 
@@ -57,7 +58,10 @@ pgv_mulmv(PG_FUNCTION_ARGS) {
     status = mul_matrix_vector_f32(matrix, b->x, result->x);
 
     // pfree(matrix->data);
+
+#ifdef DEBUG
     pfree(message);
+#endif
     FreeMatrix(matrix);
     PG_RETURN_VECTOR_P(result);
 }
