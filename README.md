@@ -35,4 +35,6 @@ syntax: [SQL CTE](https://github.com/MarchLiu/qcon2019shanghai/tree/master/sql-c
 
 ## Donate
 
+Your sponsorship will contribute to the healthy growth of this project.
+
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/marsliuzero)

@@ -35,3 +35,8 @@ Tutorial》。
 我是 Python 中文社区和 PostgreSQL 中文社区最早的用户，在 QCon 活动中，我演示过用 SQL CTE 语法实现的神经网络算法：
 [SQL CTE](https://github.com/MarchLiu/qcon2019shanghai/tree/master/sql-cte)
 
+## 捐助这个项目
+
+您的赞助会使这个项目更健康的成长。
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/marsliuzero)
